@@ -10,6 +10,10 @@ export function DeleteUser(arg1) {
   return window['go']['main']['App']['DeleteUser'](arg1);
 }
 
+export function EditUser(arg1, arg2, arg3, arg4) {
+  return window['go']['main']['App']['EditUser'](arg1, arg2, arg3, arg4);
+}
+
 export function GeneratePassword() {
   return window['go']['main']['App']['GeneratePassword']();
 }

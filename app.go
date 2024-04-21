@@ -33,7 +33,7 @@ func NewApp() *App {
     _, err = db.Exec(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
-        email TEXT UNIQUE,
+        email TEXT,
         password TEXT
     )`)
     if err != nil {
@@ -47,19 +47,21 @@ func (a *App) startup(ctx context.Context) {
     a.ctx = ctx
 }
 
-// AddUser adds a user with name, email, and password to the database
 func (a *App) AddUser(name, email, password string) error {
     _, err := a.db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", name, email, password)
     return err
 }
 
-// DeleteUser deletes a user from the database by ID
 func (a *App) DeleteUser(ID int) error {
     _, err := a.db.Exec("DELETE FROM users WHERE id = ?", ID)
     return err
 }
 
-// ListUsers lists all users from the database
+func (a *App) EditUser(ID int, name, email, password string) error {
+    _, err := a.db.Exec("UPDATE users SET name=?, email=?, password=? WHERE id=?", name, email, password, ID)
+    return err
+}
+
 func (a *App) ListUsers() ([]User, error) {
     rows, err := a.db.Query("SELECT * FROM users")
     if err != nil {
@@ -79,9 +81,9 @@ func (a *App) ListUsers() ([]User, error) {
     return users, nil
 }
 
-// GeneratePassword genera una contraseña aleatoria utilizando la biblioteca go-password
 func (a *App) GeneratePassword() (string, error) {
-    // Generar una contraseña aleatoria
+    // Generate a password that is 12 characters long with 4 digits, 4 symbols,
+  // allowing upper and lower case letters, disallowing repeat characters.
     generatedPassword, err := password.Generate(12, 4, 4, false, false)
     if err != nil {
         return "", err

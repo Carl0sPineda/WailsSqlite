@@ -6,6 +6,8 @@ export function AddUser(arg1:string,arg2:string,arg3:string):Promise<void>;
 
 export function DeleteUser(arg1:number):Promise<void>;
 
+export function EditUser(arg1:number,arg2:string,arg3:string,arg4:string):Promise<void>;
+
 export function GeneratePassword():Promise<string>;
 
 export function ListUsers():Promise<Array<main.User>>;

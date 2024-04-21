@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useGetUsers } from "../hooks/queries";
 import { useAddUser, useDeleteUser } from "../hooks/mutations";
 import PassGeneration from "./PassGeneration";
+import EditForm from "./EditForm";
 
 interface UserForm {
   Name: string;
@@ -66,13 +67,15 @@ const Home = () => {
       {users?.map((user) => (
         <ul key={user.ID} className="mt-4 flex justify-center">
           <li>
-            ID {user.ID} - NAME {user.Name} - EMAIL {user.Email}
+            ID {user.ID} - NAME {user.Name} - EMAIL {user.Email} - PASSWORD
+            {user.Password}
             <button
               className="bg-slate-500 px-1 ml-2 text-gray-200"
               onClick={() => onDelete(user.ID)}
             >
               Delete
             </button>
+            <EditForm userId={user} />
           </li>
         </ul>
       ))}

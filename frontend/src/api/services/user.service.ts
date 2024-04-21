@@ -3,6 +3,7 @@ import {
   AddUser,
   DeleteUser,
   GeneratePassword,
+  EditUser,
 } from "../../../wailsjs/go/main/App";
 
 interface User {
@@ -28,7 +29,7 @@ export const allUsers = async (): Promise<User[]> => {
 
 export const addUser = async (user: UserForm): Promise<void> => {
   try {
-    return await AddUser(user.Email, user.Name, user.Password);
+    return await AddUser(user.Name, user.Email, user.Password);
   } catch (error) {
     throw new Error("Failed to get posts");
   }
@@ -39,6 +40,14 @@ export const deleteUser = async (id: number): Promise<void> => {
     return await DeleteUser(id);
   } catch (error) {
     throw new Error("Failed to get posts");
+  }
+};
+
+export const editUser = async (user: User): Promise<void> => {
+  try {
+    return await EditUser(user.ID, user.Name, user.Email, user.Password);
+  } catch (error) {
+    throw new Error("Failed to edit user");
   }
 };
 

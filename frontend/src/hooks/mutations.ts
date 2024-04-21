@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addUser, deleteUser } from "../api/services/user.service";
+import { addUser, deleteUser, editUser } from "../api/services/user.service";
 
 const useAddUser = () => {
   const queryClient = useQueryClient();
@@ -21,4 +21,14 @@ const useDeleteUser = () => {
   });
 };
 
-export { useAddUser, useDeleteUser };
+const useEditUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: editUser,
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+};
+
+export { useAddUser, useDeleteUser, useEditUser };
